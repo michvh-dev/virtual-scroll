@@ -3,7 +3,7 @@ name: Build virtual-scroll example
 on:
   push:
     branches:
-      - master
+      - main
 env:
   S3_BUCKET: michvh.dev
   LIBRARY_NAME: virtual-scroll
