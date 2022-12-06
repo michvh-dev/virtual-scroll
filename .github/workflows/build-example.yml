@@ -8,6 +8,10 @@ env:
   S3_BUCKET: michvh.dev
   LIBRARY_NAME: virtual-scroll
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
