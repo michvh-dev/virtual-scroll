@@ -1,6 +1,6 @@
 {
-  "name": "@michvh/virtual-scroll",
-  "version": "1.0.0",
+  "name": "@michvh-dev/virtual-scroll",
+  "version": "1.0.1",
   "description": "A native custom virtual scroll component with full mobile and web support",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
@@ -10,6 +10,9 @@
     "import": "./dist/index.mjs",
     "node": "./dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup src/index.ts",
     "dev": "tsup --watch src/index.ts"
@@ -27,5 +30,8 @@
   "devDependencies": {
     "tsup": "^6.5.0",
     "typescript": "^4.9.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
