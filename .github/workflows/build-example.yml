@@ -36,9 +36,6 @@ jobs:
             yarn-
       - run: yarn --cwd ./example install
       - run: yarn --cwd ./example build
-      - name: cp api logic to out
-        run: |
-          cp -r githubaction-trigger/public/ ./project/out/
       - name: Upload to example folder
         run: |
           aws s3 sync ./example/dist s3://${S3_BUCKET}/${LIBRARY_NAME}/example
