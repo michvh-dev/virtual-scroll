@@ -47,5 +47,4 @@ declare class VirtualScroll {
     triggerEvent(eventName: string, object: VirtualScrollEventPayload): void;
     on(key: keyof typeof VirtualScroll.Events, cb: (payload: VirtualScrollEventPayload) => void): void;
 }
-
-export { VirtualScroll };
+export default VirtualScroll;
