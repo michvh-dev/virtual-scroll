@@ -11,9 +11,9 @@ interface VirtualScrollEventPayload {
     offsetY: number;
 }
 interface VirtualScrollConfig {
-    horizontal: boolean;
-    vertical: boolean;
-    keyBoardOffset: number;
+    horizontal?: boolean;
+    vertical?: boolean;
+    keyboardOffset?: number;
     boundaries?: VirtualScrollBoundaries;
 }
 declare class VirtualScroll {
@@ -21,30 +21,33 @@ declare class VirtualScroll {
         scroll: string;
     };
     element: Window | HTMLElement;
-    config: VirtualScrollConfig;
+    vertical: boolean;
+    horizontal: boolean;
+    keyboardOffset: number;
+    boundaries: VirtualScrollBoundaries;
     pageX: number;
     pageY: number;
     keyBindings: {
         [key: string]: [number, number];
     };
-    get boundaries(): VirtualScrollBoundaries;
     private mobileConfig;
-    constructor(config?: VirtualScrollConfig);
+    constructor({ vertical, horizontal, keyboardOffset, boundaries, }?: VirtualScrollConfig);
     private scroll;
-    handleMouseScroll: (e: WheelEvent) => void;
-    handleKeyDownMove: (e: KeyboardEvent) => void;
-    trackMobile(): void;
-    mobileTouchStart(e: any): boolean;
-    mobileTouchMove(e: any): boolean;
-    mobileAutoScroll: () => void;
-    mobileTouchEnd(e: any): boolean;
-    scrollEventKey: string;
-    setEventListeners(): void;
+    recalculateScroll(): void;
+    private handleMouseScroll;
+    private handleKeyDownMove;
+    private trackMobile;
+    private mobileTouchStart;
+    private mobileTouchMove;
+    private mobileAutoScroll;
+    private mobileTouchEnd;
+    private scrollEventKey;
+    private setEventListeners;
     /**
      * EVENTS
      */
-    eventWrappers: any[];
-    triggerEvent(eventName: string, object: VirtualScrollEventPayload): void;
+    private eventWrappers;
+    private triggerEvent;
     on(key: keyof typeof VirtualScroll.Events, cb: (payload: VirtualScrollEventPayload) => void): void;
 }
 export default VirtualScroll;

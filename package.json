@@ -1,6 +1,6 @@
 {
   "name": "@michvh-dev/virtual-scroll",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A native custom virtual scroll component with full mobile and web support",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
