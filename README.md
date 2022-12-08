@@ -1,6 +1,6 @@
 # @michvh-dev: Virtial scroll
 > This Is a virtual scroll that gives you the possibility to customize everything of the web scrolling mechanism, you can use it in scrolling animations, webgl, canvas, ... 
-> Live demo [_here_](https://virtual-scroll.michvh.dev/example).
+> Live demo [_here_](https://virtual-scroll.michvh.dev/example/).
 
 ## Table of Contents
 * [General Info](#general-information)
