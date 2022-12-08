@@ -1,6 +1,6 @@
 import "./style.css";
 
-import { VirtualScroll } from "../../dist";
+import { VirtualScroll } from "../../lib";
 
 window.addEventListener("DOMContentLoaded", () => {
   const pageXElement = document.getElementById("pageX");
