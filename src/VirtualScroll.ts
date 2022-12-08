@@ -1,5 +1,6 @@
 import { getCurrentMobilePositionFromEvent } from "./utils/position";
 
+const DEFAULT_KEYBOARD_OFFSET = 50;
 interface VirtualScrollBoundaries {
   minX?: number;
   minY?: number;
@@ -15,9 +16,9 @@ interface VirtualScrollEventPayload {
 }
 
 interface VirtualScrollConfig {
-  horizontal: boolean;
-  vertical: boolean;
-  keyBoardOffset: number;
+  horizontal?: boolean;
+  vertical?: boolean;
+  keyboardOffset?: number;
   boundaries?: VirtualScrollBoundaries;
 }
 
@@ -26,7 +27,10 @@ class VirtualScroll {
     scroll: "virtual-scroll-event-scroll",
   };
   element: Window | HTMLElement = window;
-  config: VirtualScrollConfig;
+  vertical = true;
+  horizontal = true;
+  keyboardOffset = DEFAULT_KEYBOARD_OFFSET;
+  boundaries: VirtualScrollBoundaries = {};
   pageX: number = 0;
   pageY: number = 0;
 
@@ -36,9 +40,7 @@ class VirtualScroll {
     right: [0, 1],
     left: [0, -1],
   };
-  get boundaries(): VirtualScrollBoundaries {
-    return this.config.boundaries || {};
-  }
+
   private mobileConfig: any = {
     pressed: false,
     timeConstant: 325,
@@ -64,24 +66,25 @@ class VirtualScroll {
     amplitude: { x: 0, y: 0 },
   };
 
-  constructor(
-    config: VirtualScrollConfig = {
-      vertical: true,
-      horizontal: false,
-      keyBoardOffset: 50,
-      boundaries: {},
-    }
-  ) {
-    this.config = config;
+  constructor({
+    vertical = true,
+    horizontal = false,
+    keyboardOffset = DEFAULT_KEYBOARD_OFFSET,
+    boundaries = {},
+  }: VirtualScrollConfig = {}) {
+    this.vertical = vertical;
+    this.horizontal = horizontal;
+    this.keyboardOffset = keyboardOffset;
+    this.boundaries = boundaries;
 
     this.setEventListeners();
   }
 
-  private scroll(offsetX: number, offsetY: number) {
-    if (this.config.vertical) {
+  private scroll(offsetX?: number, offsetY?: number) {
+    if (this.vertical && offsetY) {
       this.pageY = this.pageY + offsetY;
     }
-    if (this.config.horizontal) {
+    if (this.horizontal && offsetX) {
       this.pageX = this.pageX + offsetX;
     }
     if (
@@ -118,24 +121,27 @@ class VirtualScroll {
       offsetY,
     });
   }
+  recalculateScroll() {
+    this.scroll();
+  }
 
-  handleMouseScroll = (e: WheelEvent) => {
+  private handleMouseScroll = (e: WheelEvent) => {
     e.preventDefault();
     this.scroll(e.deltaX, e.deltaY);
   };
 
-  handleKeyDownMove = (e: KeyboardEvent) => {
+  private handleKeyDownMove = (e: KeyboardEvent) => {
     console.log(e.key);
     const keyBindChange = this.keyBindings[e.key];
     if (keyBindChange) {
       this.scroll(
-        keyBindChange[0] * this.config.keyBoardOffset,
-        keyBindChange[1] * this.config.keyBoardOffset
+        keyBindChange[0] * this.keyboardOffset,
+        keyBindChange[1] * this.keyboardOffset
       );
     }
   };
 
-  trackMobile() {
+  private trackMobile() {
     const now = Date.now();
     const elapsed = now - this.mobileConfig.timestamp;
     this.mobileConfig.timestamp = now;
@@ -154,7 +160,7 @@ class VirtualScroll {
       0.8 * vY + 0.2 * this.mobileConfig.velocity.y;
   }
 
-  mobileTouchStart(e: any) {
+  private mobileTouchStart(e: any) {
     this.mobileConfig.pressed = true;
     this.mobileConfig.reference = getCurrentMobilePositionFromEvent(e);
 
@@ -171,7 +177,7 @@ class VirtualScroll {
     }
   }
 
-  mobileTouchMove(e: any) {
+  private mobileTouchMove(e: any) {
     const { pressed, reference } = this.mobileConfig;
     if (pressed) {
       const { x, y } = getCurrentMobilePositionFromEvent(e);
@@ -192,7 +198,7 @@ class VirtualScroll {
     e.stopPropagation();
     return false;
   }
-  mobileAutoScroll = () => {
+  private mobileAutoScroll = () => {
     let deltaX = 0;
     let deltaY = 0;
 
@@ -213,7 +219,7 @@ class VirtualScroll {
       this.scroll(target.x, target.y);
     }
   };
-  mobileTouchEnd(e: any) {
+  private mobileTouchEnd(e: any) {
     const { ticker, amplitude, target, velocity } = this.mobileConfig;
     this.mobileConfig.pressed = false;
 
@@ -237,9 +243,9 @@ class VirtualScroll {
     }
   }
 
-  scrollEventKey =
+  private scrollEventKey =
     "onwheel" in document.createElement("div") ? "wheel" : "mousewheel";
-  setEventListeners() {
+  private setEventListeners() {
     // @ts-ignore-next-line
     this.element.addEventListener(this.scrollEventKey, this.handleMouseScroll, {
       passive: false,
@@ -260,8 +266,8 @@ class VirtualScroll {
   /**
    * EVENTS
    */
-  eventWrappers: any[] = [];
-  triggerEvent(eventName: string, object: VirtualScrollEventPayload) {
+  private eventWrappers: any[] = [];
+  private triggerEvent(eventName: string, object: VirtualScrollEventPayload) {
     document.dispatchEvent(new CustomEvent(eventName, { detail: object }));
   }
   on(
