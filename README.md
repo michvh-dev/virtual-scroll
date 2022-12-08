@@ -40,7 +40,7 @@ yarn add @michvh-dev/virtual-scroll
 
 ```js
 const scroll = new VirtualScroll({
-    element: window // Can also be an other html element (required)
+    element: window, // Can also be an other html element (required)
     horizontal: false, // Default false (not required)
     vertical: true, // Default true (not required)
     keyBoardOffset: 25, // Default 50 (not required)
