@@ -4,14 +4,10 @@
 
 ## Table of Contents
 * [General Info](#general-information)
-* [Screenshots](#screenshots)
-* [Setup](#setup)
+* [Features](#features)
+* [Installation](#installation)
 * [Usage](#usage)
-* [Project Status](#project-status)
-* [Room for Improvement](#room-for-improvement)
-* [Acknowledgements](#acknowledgements)
-* [Contact](#contact)
-<!-- * [License](#license) -->
+
 
 
 ## General Information
@@ -28,10 +24,6 @@ The key features are
 - mobile velocity autoscrolling
 - Set custom boundaries (or make it infinite)
 
-## Screenshots
-![Example screenshot](./img/screenshot.png)
-<!-- If you have screenshots you'd like to share, include them here. -->
-
 
 ## Installation
 ### npm
@@ -39,7 +31,7 @@ The key features are
 npm i @michvh-dev/virtual-scroll -S
 ```
 
-###yarn
+### yarn
 ```
 yarn add @michvh-dev/virtual-scroll
 ```
