@@ -18,7 +18,8 @@ html {
 }
 h1 {
   margin-bottom: 2rem;
-  font-size: 4rem;
+  font-size: 6rem;
+  color: white;
   font-weight: 100;
 }
 .list {
