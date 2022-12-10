@@ -39,6 +39,8 @@ yarn add @michvh-dev/virtual-scroll
 ## Usage
 
 ```js
+import VirtualScroll from '@michvh-dev/virtual-scroll'
+
 const scroll = new VirtualScroll({
     element: window, // Can also be an other html element (required)
     horizontal: false, // Default false (not required)
